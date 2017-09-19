@@ -43,7 +43,7 @@
       socket.on('showrows', function(rows) {
         var html='';
         for (var i=0; i<rows.length; i++) {
-          html += '<div class="item"><p>' + rows[i].name + '</p><input type="checkbox" id="'+rows[i].employeeid +'" name="" value="" '+ rows[i].status +' onClick="buttonClicked(this.id)"><div class="toggle"><label for="' + rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
+          html += '<div class="item"><p>' + rows[i].name + '</p><input type="checkbox" id="'+rows[i].employeeid +'" name="' + rows[i].name +'" value="" '+ rows[i].status +' onClick="buttonClicked({id:this.id,name:this.name})"><div class="toggle"><label for="' + rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
         }
 		
         document.getElementById("display").innerHTML = html;
@@ -53,9 +53,9 @@
 	socket.on('buttonUpdate', function(data){
 				 
 			 });
-		function buttonClicked(clicked_id){
+		function buttonClicked(person){
 		
-			   socket.emit('clicked',clicked_id);
+			   socket.emit('clicked',person);
 			 }
 	//
 

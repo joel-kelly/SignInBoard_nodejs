@@ -50,10 +50,10 @@ doc.useServiceAccountAuth(creds, function (err) {
 
   
 //Client reports click-   
-   socket.on('clicked', function(clicked_id) {
+   socket.on('clicked', function(person) {
 
 		  //send a message to ALL connected clients
-		console.log(clicked_id);
+		console.log(person);
 		
 		
     });
