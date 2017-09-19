@@ -31,7 +31,6 @@ var creds = require('./client_secret.json');
 // Create a document object using the ID of the spreadsheet - obtained from its URL.
 var doc = new GoogleSpreadsheet('1XhFDcj4bgYa2-XTHXaedQVnEye-oROtaa4DfynJdCsY');
 
-
 //Create a socket connection- query the db and emit it
 io.on('connection', function (socket) {
 
@@ -49,16 +48,39 @@ doc.useServiceAccountAuth(creds, function (err) {
   });
 
   
-//Client reports click-   
+//Click handling  
    socket.on('clicked', function(person) {
 
-		  //send a message to ALL connected clients
 		console.log(person);
 		
+		//update GS IN/OUT status to reflect change 
+		doc.getCells(1,{
+			'min-col': 3,
+			'max-col': 3,
+			'return-empty': true
+			}, function(err, cells) {
+								var cell = cells[person.id];
+								//checkbox status is either blank (visually indicating OUT) or checked (visually indicating IN)							
+								      if(cell == "checked"){
+									  cell.setValue('',function(err) {
+												  if(err) {
+													console.log(err);
+												  }
+												});
+									  }else{
+										  cell.setValue('checked',function(err) {
+													  if(err) {
+														console.log(err);
+													  }
+													});										  
+									  }
+			});
+									  
+		 
 		
-    });
+    });	//click handling
   
   
   
-});	
+});	// io.on connection
 
