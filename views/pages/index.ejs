@@ -18,27 +18,32 @@
   <div class="container">
   <div class="alert alert-info text-center" role="alert">
     
-	<h1 id="socketio"> not connected </h1>
+
     	
-	<fieldset>
-	<legend>BCRI Staff</legend>
-	<form action="">
-	<div id="display"> </div>
-	</form>
-	</fieldset>
+
+<article>
+  	<div id="display"> </div>
+  </article>
 	
 	
   </div>
   
-  
+ 	<p2 id="socketio" > Database not connected </p> 
 </div>
+
+
+
+
+
+
+
 
 	    <script src="/socket.io/socket.io.js"></script>
     <script>
 
       var socket = io();
       socket.on('connect', function() {
-        document.getElementById("socketio").innerHTML = "Socket connected";
+        document.getElementById("socketio").innerHTML = "Database connected";
       });
       socket.on('showrows', function(rows) {
         var html='';

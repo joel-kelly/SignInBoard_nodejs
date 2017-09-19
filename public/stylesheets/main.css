@@ -36,23 +36,17 @@ body {
 	background: #efeff4;
 }
 
-fieldset {
-  margin: 30px auto 0;
-  width: 320px;
+
+
+article {
+  -webkit-columns: 3 200px;
+  -moz-columns: 3 200px;
+  columns: 3 200px;
   text-align: left;
 }
 
-form {
-	border-top: 1px solid #c8c7cc;
-	border-bottom: 1px solid #c8c7cc;
-}
 
-legend {
-	margin: 0 0 5px;
-	color: #6f6f74;
-	font-size: 13px;
-	line-height: 1.4;
-}
+
 
 .item {
 	position: relative;
@@ -65,7 +59,7 @@ legend {
 	margin: 0 0 0 8px;
 	height: 44px;
 	color: #000000;
-	font-size: 15px;
+	font-size: 20px;
 	line-height: 44px;
 }
 
@@ -73,6 +67,11 @@ legend {
 	border: 0;
 }
 
+
+p2 {
+	font-size:12px;
+	text-align:right;
+}
 
 input[type="checkbox"] {
 	display: none;	

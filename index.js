@@ -60,14 +60,18 @@ doc.useServiceAccountAuth(creds, function (err) {
 			'return-empty': true
 			}, function(err, cells) {
 								var cell = cells[person.id];
+								
 								//checkbox status is either blank (visually indicating OUT) or checked (visually indicating IN)							
-								      if(cell == "checked"){
+								      if(cell.value == "checked"){
+										  console.log(person.name + " signing OUT");
 									  cell.setValue('',function(err) {
 												  if(err) {
 													console.log(err);
 												  }
 												});
-									  }else{
+									  }
+									  else if(cell.value == ''){
+										   console.log(person.name + " signing IN");
 										  cell.setValue('checked',function(err) {
 													  if(err) {
 														console.log(err);
