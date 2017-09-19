@@ -22,6 +22,8 @@ http.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
+
+
 //Set up Google Spreadsheet table
 // Google Spreadsheet Credentials
 var creds = require('./client_secret.json');
@@ -30,7 +32,7 @@ var creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1XhFDcj4bgYa2-XTHXaedQVnEye-oROtaa4DfynJdCsY');
 
 
-//Create a socket connection- we will query the db and emit it every time a client connects
+//Create a socket connection- query the db and emit it
 io.on('connection', function (socket) {
 
     console.log('a client connected');
@@ -45,4 +47,18 @@ doc.useServiceAccountAuth(creds, function (err) {
 	  socket.emit('showrows',rows);
 	});
   });
+
+  
+//Client reports click-   
+   socket.on('clicked', function(clicked_id) {
+
+		  //send a message to ALL connected clients
+		console.log(clicked_id);
+		
+		
+    });
+  
+  
+  
 });	
+

@@ -19,7 +19,8 @@
   <div class="alert alert-info text-center" role="alert">
     
 	<h1 id="socketio"> not connected </h1>
-    <fieldset>
+    	
+	<fieldset>
 	<legend>BCRI Staff</legend>
 	<form action="">
 	<div id="display"> </div>
@@ -42,11 +43,22 @@
       socket.on('showrows', function(rows) {
         var html='';
         for (var i=0; i<rows.length; i++) {
-          html += '<div class="item"><p>' + rows[i].name + '</p><input type="checkbox" id="'+rows[i].name +'" name="" value=""><div class="toggle"><label for="' + rows[i].name +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
+          html += '<div class="item"><p>' + rows[i].name + '</p><input type="checkbox" id="'+rows[i].employeeid +'" name="" value="" '+ rows[i].status +' onClick="buttonClicked(this.id)"><div class="toggle"><label for="' + rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
         }
 		
         document.getElementById("display").innerHTML = html;
 		});
+		
+	//tutorial code for socket buttons
+	socket.on('buttonUpdate', function(data){
+				 
+			 });
+		function buttonClicked(clicked_id){
+		
+			   socket.emit('clicked',clicked_id);
+			 }
+	//
+
     </script>
 
 </body>
