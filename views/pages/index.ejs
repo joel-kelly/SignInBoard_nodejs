@@ -10,7 +10,41 @@
 <div class="jumbotron text-center">
   <div class="container">
     <h1>BC Research Sign In Board</h1>
-    <p>Version 3.0- NodeJS/Google Spreadsheets</p>
+	
+	<button class="accordion">Add Person</button>
+	<div class="panel">
+	
+<form id="addUser">
+<ul class="form-style-1">
+        <li>
+        <label>Name <span class="required">*</span></label>
+        <input type="text" name="name" class="field-long" placeholder="First Last"/>
+		</li>
+        <li>
+        <label>Email <span class="required">*</span></label>
+        <input type="email" name="contact_email" class="field-long" />
+		</li>
+		<li>
+        <label>Cell phone</label>
+        <input type="text" name="contact_phone" class="field-long" />
+		</li>
+        <li>
+        <label>Emergency Contact <span class="required">*</span></label>
+        <input type="text" name="emergency_name" class="field-long" />
+		</li>
+		<li>
+        <label>Emergency Contact Phone <span class="required">*</span></label>
+        <input type="text" name="emergency_phone" class="field-long" />
+		</li>
+		 <li>
+        <input type="submit" value="Add Person">
+		</li>
+</ul>
+</form>
+	
+	</div>
+	
+	
   </div>
 </div>
 
@@ -31,16 +65,10 @@
  	<p2 id="socketio" > Database not connected </p> 
 </div>
 
-
-
-
-
-
-
-
 	    <script src="/socket.io/socket.io.js"></script>
     <script>
-
+	
+	//connect to server, access list of users from database, display users with checkboxes
       var socket = io();
       socket.on('connect', function() {
         document.getElementById("socketio").innerHTML = "Database connected";
@@ -54,17 +82,48 @@
         document.getElementById("display").innerHTML = html;
 		});
 		
-	//tutorial code for socket buttons
-	socket.on('buttonUpdate', function(data){
-				 
-			 });
+	//emit socket clicked to change in/out status in GS:
 		function buttonClicked(person){
 		
-			   socket.emit('clicked',person);
+			   socket.emit('clicked', person);
 			 }
-	//
+		
+	//emit socket newUser to add user when addUser form submit is pressed
+		$(document).on('submit','form#addUser',function(){
+			//jQuery grabs form data, convert it into an object
+			var formdata = $(this).serializeArray();
+			var person ={};
+			$(formdata).each(function(index, obj){
+				person[obj.name] = obj.value;
+			});
+			
+			socket.emit('add', person);
+			
+			return false;
+		});
 
     </script>
 
+		<script>
+		//JS script for accordions
+	var acc = document.getElementsByClassName("accordion");
+	var i;
+
+	for (i = 0; i < acc.length; i++) {
+	  acc[i].onclick = function() {
+		this.classList.toggle("active");
+		var panel = this.nextElementSibling;
+		if (panel.style.maxHeight){
+		  panel.style.maxHeight = null;
+		} else {
+		  panel.style.maxHeight = panel.scrollHeight + "px";
+		} 
+	  }
+	}
+	</script>
+	
+
+	
+	
 </body>
 </html>

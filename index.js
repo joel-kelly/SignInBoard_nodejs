@@ -48,7 +48,7 @@ doc.useServiceAccountAuth(creds, function (err) {
   });
 
   
-//Click handling  
+//Listen for checkbox clicks  
    socket.on('clicked', function(person) {
 
 		console.log(person);
@@ -82,9 +82,21 @@ doc.useServiceAccountAuth(creds, function (err) {
 									  
 		 
 		
-    });	//click handling
+    });	//end click handling
   
-  
+	//Listen for new users
+	//right now this is breaking the database connection :(
+	socket.on('add', function(person) {
+
+			console.log("add socket detected");
+			console.log(person);
+			
+		}  
+		
+		
+		
+		  
+		  );	//new user 
   
 });	// io.on connection
 
