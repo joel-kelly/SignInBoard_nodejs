@@ -40,19 +40,14 @@ io.on('connection', function (socket) {
 doc.useServiceAccountAuth(creds, function (err) {
  
   // Get all of the rows from the spreadsheet.
-  doc.getRows(1, function (err, rows) {
-      //console.log('Data received from Db:\n');
-      //console.log(rows);
+  doc.getRows(1, {orderby:'name'}, function (err, rows) {
 	  socket.emit('showrows',rows);
 	});
   });
 
   
-//Listen for checkbox clicks  
-   socket.on('clicked', function(person) {
-
-		console.log(person);
-		
+//Listen for checkbox click emissions
+socket.on('clicked', function(person) {	
 		//update GS IN/OUT status to reflect change 
 		doc.getCells(1,{
 			'min-col': 3,
@@ -82,21 +77,42 @@ doc.useServiceAccountAuth(creds, function (err) {
 									  
 		 
 		
-    });	//end click handling
+    });	//end listen for click handling
   
-	//Listen for new users
-	//right now this is breaking the database connection :(
+	//Listen for new user emissions
+	// This is currently what I believe is called 'callback hell'
+	
 	socket.on('add', function(person) {
-
-			console.log("add socket detected");
-			console.log(person);
+		console.log("add socket detected");
+	
+		doc.getRows(1, function (err, rows) {
+				
+			//set the new person's employeeid, checkbox (default IN) & status 
+			var emp =rows.length + 1;
+			console.log("Adding new employee, number: " + emp);
+			person.employeeid = emp;
+			person.checkbox = "checked";
+			var foo = person.employeeid + 1;
+			person.status ='=if(C' + foo +'="checked","IN","OUT")';
 			
-		}  
-		
-		
-		
-		  
-		  );	//new user 
+			//add the new person to the GS db
+			doc.addRow(1, person, function(err, rows) {
+				
+				//refresh the list of people for the clients
+				doc.getRows(1, {orderby:'name'}, function (err, rows2) {
+					socket.emit('showrows',rows2);
+				});
+					
+				if(err) {
+					console.log(err);
+				}
+			});	
+		});
+			
+			
+			
+
+	});	//end listen for new user 
   
 });	// io.on connection
 

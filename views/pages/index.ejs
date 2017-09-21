@@ -11,6 +11,7 @@
   <div class="container">
     <h1>BC Research Sign In Board</h1>
 	
+		
 	<button class="accordion">Add Person</button>
 	<div class="panel">
 	
@@ -64,6 +65,7 @@
   
  	<p2 id="socketio" > Database not connected </p> 
 </div>
+	
 
 	    <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -99,6 +101,11 @@
 			
 			socket.emit('add', person);
 			
+			//clear form
+			//$("form#addUser").trigger("reset");
+			
+			
+			//collapse accordion
 			return false;
 		});
 
