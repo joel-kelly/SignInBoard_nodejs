@@ -11,38 +11,36 @@
   <div class="container">
     <h1>BC Research Sign In Board</h1>
 	
-	<div class = "accordion">
-	    <div class="accordion-section">
-        <a class="accordion-section-title" href="#accordion-1">Add Person</a>
-		 <div id="accordion-1" class="accordion-section-content">
+	<button class="accordion">Add Person</button>
+	<div class="panel">
 	
-			<form id="addUser">
-			<ul class="form-style-1">
-					<li>
-					<label>Name <span class="required">*</span></label>
-					<input type="text" name="name" class="field-long" placeholder="First Last"/>
-					</li>
-					<li>
-					<label>Email <span class="required">*</span></label>
-					<input type="email" name="contact_email" class="field-long" />
-					</li>
-					<li>
-					<label>Cell phone</label>
-					<input type="text" name="contact_phone" class="field-long" />
-					</li>
-					<li>
-					<label>Emergency Contact <span class="required">*</span></label>
-					<input type="text" name="emergency_name" class="field-long" />
-					</li>
-					<li>
-					<label>Emergency Contact Phone <span class="required">*</span></label>
-					<input type="text" name="emergency_phone" class="field-long" />
-					</li>
-					 <li>
-					<input type="submit" value="Add Person">
-					</li>
-			</ul>
-			</form>
+<form id="addUser">
+<ul class="form-style-1">
+        <li>
+        <label>Name <span class="required">*</span></label>
+        <input type="text" name="name" class="field-long" placeholder="First Last"/>
+		</li>
+        <li>
+        <label>Email <span class="required">*</span></label>
+        <input type="email" name="contact_email" class="field-long" />
+		</li>
+		<li>
+        <label>Cell phone</label>
+        <input type="text" name="contact_phone" class="field-long" />
+		</li>
+        <li>
+        <label>Emergency Contact <span class="required">*</span></label>
+        <input type="text" name="emergency_name" class="field-long" />
+		</li>
+		<li>
+        <label>Emergency Contact Phone <span class="required">*</span></label>
+        <input type="text" name="emergency_phone" class="field-long" />
+		</li>
+		 <li>
+        <input type="submit" value="Add Person">
+		</li>
+</ul>
+</form>
 	
 		</div>
 	</div>
@@ -93,7 +91,8 @@
 			 }
 		
 	//emit socket newUser to add user when addUser form submit is pressed
-		$(document).on('submit','form#addUser',function(){
+		$(document).on('submit','form#addUser',function(e){
+			e.preventDefault();
 			//jQuery grabs form data, convert it into an object
 			var formdata = $(this).serializeArray();
 			var person ={};
@@ -108,17 +107,29 @@
 			$( 'form#addUser' ).each(function(){
     			this.reset();
 			});
-			
-			
-			//stop the default behaviour for the submit button
-			return false;
+			//close accordion
+			var acc = document.getElementsByClassName("accordion");
+			acc[0].click()	;
+
 		});
 
     </script>
 
 		<script>
-		//JS script for AddUser accordion GOES HERE
-		
+		//JS script for accordions
+	var acc = document.getElementsByClassName("accordion");
+	var i;
+	for (i = 0; i < acc.length; i++) {
+	  acc[i].onclick = function() {
+		this.classList.toggle("active");
+		var panel = this.nextElementSibling;
+		if (panel.style.maxHeight){
+		  panel.style.maxHeight = null;
+		} else {
+		  panel.style.maxHeight = panel.scrollHeight + "px";
+		} 
+	  }
+	}
 	
 	</script>
 	
