@@ -80,7 +80,7 @@ socket.on('clicked', function(person) {
     });	//end listen for click handling
   
 	//Listen for new user emissions
-	// This is currently what I believe is called 'callback hell'
+	// This is currently what I believe is called 'callback hell', but it works
 	
 	socket.on('add', function(person) {
 		console.log("add socket detected");
