@@ -78,7 +78,7 @@
       socket.on('showrows', function(rows) {
         var html='';
         for (var i=0; i<rows.length; i++) {
-          html += '<div class="item"><p>' + rows[i].name + '</p><input type="checkbox" id="'+rows[i].employeeid +'" name="' + rows[i].name +'" value="" '+ rows[i].checkbox +' onClick="buttonClicked({id:this.id,name:this.name})"><div class="toggle"><label for="' + rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
+          html += '<div class="item"><p>' + rows[i].name + '</p><input type="checkbox" id="'+rows[i].employeeid +'" name="' + rows[i].name +'" value="" '+ rows[i].checkbox +' onClick="buttonClicked({id:this.id,name:this.name,status:document.getElementById(this.id).checked})"><div class="toggle"><label for="' + rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
         }
 		
         document.getElementById("display").innerHTML = html;
@@ -87,9 +87,14 @@
 		
 	//emit socket clicked to change in/out status in GS:
 		function buttonClicked(person){
-		
-			   socket.emit('clicked', person);
-			 }
+		 	socket.emit('clicked', person);
+			}
+			 
+	//listen for "clicked2" events to change in/out status
+		socket.on('clicked2', function(person) {
+ 
+			$('input#'+person.id).prop('checked', person.status);
+		});
 		
 	//emit socket newUser to add user when addUser form submit is pressed
 		$(document).on('submit','form#addUser',function(e){

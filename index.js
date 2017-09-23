@@ -38,15 +38,16 @@ io.on('connection', function (socket) {
 
 // Authenticate with the Google Spreadsheets API.
 doc.useServiceAccountAuth(creds, function (err) {
-		//refresh list of people for all clients	
+		//Send the list of people from GS	
 		doc.getRows(1, {orderby:'name'}, function (err, rows) {
-			updateRows(rows);
+			socket.emit('showrows',rows);
 		});
   });
 
   
 //Listen for checkbox click emissions
 socket.on('clicked', function(person) {	
+	
 		//update GS IN/OUT status to reflect change 
 		doc.getCells(1,{
 			'min-col': 3,
@@ -72,12 +73,10 @@ socket.on('clicked', function(person) {
 													  }
 													});										  
 									  }
-			});
+			});//end update GS
 									  
-		//refresh list of people for all clients	
-		doc.getRows(1, {orderby:'name'}, function (err, rows) {
-			updateRows(rows);
-		});	 
+		//tell all other clients to update the change in status
+		socket.broadcast.emit('clicked2', person);
 		
     });	//end listen for click handling
   
@@ -87,9 +86,9 @@ socket.on('clicked', function(person) {
 	socket.on('add', function(person) {
 		console.log("add socket detected");
 	
-		doc.getRows(1, function (err, rows) {
+		doc.getRows(1, function (err, rows) {	//get the current list of people
 				
-			//set the new person's employeeid, checkbox (default IN) & status 
+			//figure out  the new person's employeeid, checkbox (default IN) & status 
 			var emp =rows.length + 1;
 			console.log("Adding new employee, number: " + emp);
 			person.employeeid = emp;
@@ -97,28 +96,26 @@ socket.on('clicked', function(person) {
 			var foo = person.employeeid + 1;
 			person.status ='=if(C' + foo +'="checked","IN","OUT")';
 			
+			console.log("Before addition: List of employees is " + rows.length);
+			
 			//add the new person to the GS db
 			doc.addRow(1, person, function(err, rows) {
 				if(err) {
 					console.log(err);
 				}
-			});			
+				console.log("Inside addition function: List of employees is " + rows.length);	
+				
+				//update all clients with the new list of people
+				//Currently the io.sockets.emit is breaking the system :(
+				io.sockets.emit('showrows',rows);
+				console.log("Emitting employee list: ",  rows.length, "employees");
+				
+			});	
+				console.log("After addition: List of employees is " + rows.length);		
 		});
-		//refresh list of people for all clients	
-		doc.getRows(1, {orderby:'name'}, function (err, rows2) {
-			updateRows();
-		});
-			
+
 
 	});	//end listen for new user 
-
-
-function updateRows(rows){
-	//refresh the list of people for the clients
-		io.sockets.emit('showrows',rows);
-		console.log("Emitting employee list: ",  rows.length, "employees");
-	
-}
 	
 });	// io.on connection
 
