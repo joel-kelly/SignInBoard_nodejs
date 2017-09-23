@@ -38,11 +38,10 @@ io.on('connection', function (socket) {
 
 // Authenticate with the Google Spreadsheets API.
 doc.useServiceAccountAuth(creds, function (err) {
- 
-  // Get all of the rows from the spreadsheet.
-  doc.getRows(1, {orderby:'name'}, function (err, rows) {
-	  socket.emit('showrows',rows);
-	});
+		//refresh list of people for all clients	
+		doc.getRows(1, {orderby:'name'}, function (err, rows) {
+			updateRows(rows);
+		});
   });
 
   
@@ -75,7 +74,10 @@ socket.on('clicked', function(person) {
 									  }
 			});
 									  
-		 
+		//refresh list of people for all clients	
+		doc.getRows(1, {orderby:'name'}, function (err, rows) {
+			updateRows(rows);
+		});	 
 		
     });	//end listen for click handling
   
@@ -97,22 +99,26 @@ socket.on('clicked', function(person) {
 			
 			//add the new person to the GS db
 			doc.addRow(1, person, function(err, rows) {
-				
-				//refresh the list of people for the clients
-				doc.getRows(1, {orderby:'name'}, function (err, rows2) {
-					socket.emit('showrows',rows2);
-				});
-					
 				if(err) {
 					console.log(err);
 				}
-			});	
+			});			
 		});
-			
-			
+		//refresh list of people for all clients	
+		doc.getRows(1, {orderby:'name'}, function (err, rows2) {
+			updateRows();
+		});
 			
 
 	});	//end listen for new user 
-  
+
+
+function updateRows(rows){
+	//refresh the list of people for the clients
+		io.sockets.emit('showrows',rows);
+		console.log("Emitting employee list: ",  rows.length, "employees");
+	
+}
+	
 });	// io.on connection
 
