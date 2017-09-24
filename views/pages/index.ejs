@@ -82,8 +82,13 @@
         }
 		
         document.getElementById("display").innerHTML = html;
-		alert("rows updated"); 
+		//alert("rows updated"); 
 		});
+	
+	socket.on('reload', function(data) {
+		location.reload();
+	});
+	
 		
 	//emit socket clicked to change in/out status in GS:
 		function buttonClicked(person){

@@ -96,22 +96,17 @@ socket.on('clicked', function(person) {
 			var foo = person.employeeid + 1;
 			person.status ='=if(C' + foo +'="checked","IN","OUT")';
 			
-			console.log("Before addition: List of employees is " + rows.length);
 			
 			//add the new person to the GS db
 			doc.addRow(1, person, function(err, rows) {
 				if(err) {
 					console.log(err);
-				}
-				console.log("Inside addition function: List of employees is " + rows.length);	
-				
+				}				
 				//update all clients with the new list of people
-				//Currently the io.sockets.emit is breaking the system :(
-				io.sockets.emit('showrows',rows);
-				console.log("Emitting employee list: ",  rows.length, "employees");
+				io.sockets.emit('reload',{});
+
 				
 			});	
-				console.log("After addition: List of employees is " + rows.length);		
 		});
 
 

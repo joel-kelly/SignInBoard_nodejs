@@ -4,7 +4,6 @@ A simple cloud-based in/out board using Google Spreadsheets.
 
 TO DO:
 
-- Fix bug from adding new users
 - Integrate with Heroku
 - Make pretty logo
 - Make pretty on screen keyboard
@@ -21,3 +20,4 @@ COMPLETED:
 	- Erase form upon submission- COMPLETE
 	- Close Accordion- COMPLETE
 - Figure out how to keep multiple clients in sync?- COMPLETE
+- Fix bug from adding new users- COMPLETE YESSS HAHAHA
