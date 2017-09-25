@@ -53,7 +53,7 @@ input.current {
 
 
 .jumbotron {
-  background: #31708f;
+  background: #3d3d3d;
   color: white;
   padding-bottom: 30px; }
   .jumbotron .btn-primary {
@@ -79,6 +79,11 @@ input.current {
     .jumbotron .lang-logo img {
       max-width: 100%; }
 
+	  
+.alert-info {
+	background:#969696;
+}
+}
 /*iOS toggle styles found at https://codepen.io/o_ti/pen/bkEco */	  
 * {
 	margin: 0;
@@ -112,7 +117,7 @@ article {
 	border-top: 1px solid #c8c7cc;
 	margin: 0 0 0 8px;
 	height: 44px;
-	color: #000000;
+	color: #3d3d3d;
 	font-size: 20px;
 	line-height: 44px;
 }
@@ -283,7 +288,7 @@ input[type="checkbox"] {
 
 input[type="checkbox"]:active + .toggle label,
 input[type="checkbox"]:checked + .toggle label {
-	border: 16px solid #4cd964;
+	border: 16px solid #00778b;
 }
 
 input[type="checkbox"]:checked + .toggle i {
