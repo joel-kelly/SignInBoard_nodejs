@@ -64,7 +64,9 @@
 	
   </div>
   
- 	<p2 id="socketio" > Database not connected </p> 
+ 	<p2 id="socketio" > Database not connected </p2> <br \>
+	<img src = "/fa.png" width=25px> <p2 id="first_aid_statement"><b>Warning!</b> No first aid attendants are in the building.</p2>
+	
 </div>
 	
 
@@ -73,33 +75,88 @@
 	
 	//connect to server, access list of users from database, display users with checkboxes
       var socket = io();
+	  
+	  //variables to track first aid attendants
+	  var first_aid ='';
+	  var first_aid_count = 0;
+	  var first_aid_attrb = '';
+
+	  
       socket.on('connect', function() {
         document.getElementById("socketio").innerHTML = "Database connected";
       });
       socket.on('showrows', function(rows) {
         var html='';
         for (var i=0; i<rows.length; i++) {
-          html += '<div class="item"><p>' + rows[i].name + '</p><input type="checkbox" id="'+rows[i].employeeid +'" name="' + rows[i].name +'" value="" '+ rows[i].checkbox +' onClick="buttonClicked({id:this.id,name:this.name,status:document.getElementById(this.id).checked})"><div class="toggle"><label for="' + rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
-        }
+			console.log(rows[i].firstaid);
+			
+			var firstaid = '';
+			//check to see for first aid attendants			
+			if (rows[i].firstaid == "yes"){
+				first_aid = '<img src = "/fa.png" width=25px>';
+				first_aid_count ++;
+				firstaid = 'yes';
+				first_aid_attrb = 'data-fa="' + firstaid + '"';
+				}
+			
+          html += '<div class="item"><p>' + rows[i].name + '   ' + first_aid + '</p> <input type="checkbox"' + ' ' + first_aid_attrb + ' ' + 'id="'
+			+rows[i].employeeid +'" name="' + rows[i].name +'" value="" '+ rows[i].checkbox +
+			' onClick="buttonClicked({id:this.id,name:this.name, status:document.getElementById(this.id).checked})"><div class="toggle"><label for="' 
+			+ rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
+        
+		//reset first aid html for next row entry
+		first_aid = '';
+		first_aid_attrb = '';
+
+		}
 		
         document.getElementById("display").innerHTML = html;
-		//alert("rows updated"); 
+		countFirstAid();
+
 		});
 	
 	socket.on('reload', function(data) {
 		location.reload();
 	});
-	
+		//code to update first aid attendant statement
+		function countFirstAid(){
+			if (first_aid_count > 0){
+				var first_aid_html = "There are " + first_aid_count + " first aid attendants in the building";
+				document.getElementById("first_aid_statement").innerHTML = first_aid_html;
+			} else{
+				var first_aid_html = "<b>Warning!</b> No first aid attendants are in the building.";
+				document.getElementById("first_aid_statement").innerHTML = first_aid_html;
+			}
+			
+		}
 		
 	//emit socket clicked to change in/out status in GS:
 		function buttonClicked(person){
 		 	socket.emit('clicked', person);
+			
+			console.log(person);
+			//recheck the first aid count for this client.
+			if (person.firstaid == "yes"){
+				alert("first aid person");
 			}
+		}
 			 
-	//listen for "clicked2" events to change in/out status
+	//listen for "clicked2" broadcast.emit events to keep in/out status consistent between multiple clients
 		socket.on('clicked2', function(person) {
- 
 			$('input#'+person.id).prop('checked', person.status);
+			
+			//recheck the first aid count for this client.
+			if (person.firstaid == "yes"){
+				if(person.status){//first aid attendant is checking in
+					first_aid_count ++;
+				}
+				else{	//first aid attendant is checking out
+					first_aid_count --;
+					
+				}
+			}
+			//update the first aid statement
+			countFirstAid();
 		});
 		
 	//emit socket newUser to add user when addUser form submit is pressed

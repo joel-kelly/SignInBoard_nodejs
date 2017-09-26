@@ -47,7 +47,8 @@ doc.useServiceAccountAuth(creds, function (err) {
   
 //Listen for checkbox click emissions
 socket.on('clicked', function(person) {	
-	
+		console.log("server detected click");
+		console.log(person);
 		//update GS IN/OUT status to reflect change 
 		doc.getCells(1,{
 			'min-col': 3,
@@ -55,7 +56,7 @@ socket.on('clicked', function(person) {
 			'return-empty': true
 			}, function(err, cells) {
 								var cell = cells[person.id];
-								
+								console.log(cell.firstaid);
 								//checkbox status is either blank (visually indicating OUT) or checked (visually indicating IN)							
 								      if(cell.value == "checked"){
 										  console.log(person.name + " signing OUT");
