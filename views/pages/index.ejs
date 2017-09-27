@@ -76,43 +76,36 @@
 	//connect to server, access list of users from database, display users with checkboxes
       var socket = io();
 	  
-	  //variables to track first aid attendants
-	  var first_aid ='';
-	  var first_aid_count = 0;
-	  var first_aid_attrb = '';
-
-	  
+	  //variables for first aid attendants
+	  var firstAidHtml ='';
+	  var firstAidAttrb = '';
+		  
       socket.on('connect', function() {
         document.getElementById("socketio").innerHTML = "Database connected";
       });
       socket.on('showrows', function(rows) {
         var html='';
         for (var i=0; i<rows.length; i++) {
-			console.log(rows[i].firstaid);
-			
-			var firstaid = '';
 			//check to see for first aid attendants			
+			
 			if (rows[i].firstaid == "yes"){
-				first_aid = '<img src = "/fa.png" width=25px>';
-				first_aid_count ++;
-				firstaid = 'yes';
-				first_aid_attrb = 'data-fa="' + firstaid + '"';
+				firstAidHtml = '<img src = "/fa.png" width=25px>';
+				firstAidAttrb = 'data-firstAid=yes';
 				}
 			
-          html += '<div class="item"><p>' + rows[i].name + '   ' + first_aid + '</p> <input type="checkbox"' + ' ' + first_aid_attrb + ' ' + 'id="'
-			+rows[i].employeeid +'" name="' + rows[i].name +'" value="" '+ rows[i].checkbox +
-			' onClick="buttonClicked({id:this.id,name:this.name, status:document.getElementById(this.id).checked})"><div class="toggle"><label for="' 
-			+ rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
+			  html += '<div class="item"><p>' + rows[i].name + '</p><input type="checkbox" id="'+rows[i].employeeid +'" name="' + rows[i].name +'" value="" '+ rows[i].checkbox +' onClick="buttonClicked({id:this.id,name:this.name,status:document.getElementById(this.id).checked})"><div class="toggle"><label for="' + rows[i].employeeid +'" data-off="out" data-on="in"><i></i></label></div></div>';		  
         
-		//reset first aid html for next row entry
-		first_aid = '';
-		first_aid_attrb = '';
-
+			//reset first aid html string for next row entry
+			//firstAidHtml ='';
 		}
+			//firstAidAttrb = '';
 		
+		//display the list of users
         document.getElementById("display").innerHTML = html;
+		
+		//update first aid count
 		countFirstAid();
-
+		
 		});
 	
 	socket.on('reload', function(data) {
@@ -120,6 +113,9 @@
 	});
 		//code to update first aid attendant statement
 		function countFirstAid(){
+			//count all users who have the firstAidAttrb in their checkbox
+			var first_aid_count = document.querySelectorAll('input[type="checkbox"][data-firstAid="yes"]:checked').length;
+			
 			if (first_aid_count > 0){
 				var first_aid_html = "There are " + first_aid_count + " first aid attendants in the building";
 				document.getElementById("first_aid_statement").innerHTML = first_aid_html;
@@ -134,27 +130,15 @@
 		function buttonClicked(person){
 		 	socket.emit('clicked', person);
 			
-			console.log(person);
 			//recheck the first aid count for this client.
-			if (person.firstaid == "yes"){
-				alert("first aid person");
+			countFirstAid();
 			}
 		}
 			 
 	//listen for "clicked2" broadcast.emit events to keep in/out status consistent between multiple clients
 		socket.on('clicked2', function(person) {
 			$('input#'+person.id).prop('checked', person.status);
-			
-			//recheck the first aid count for this client.
-			if (person.firstaid == "yes"){
-				if(person.status){//first aid attendant is checking in
-					first_aid_count ++;
-				}
-				else{	//first aid attendant is checking out
-					first_aid_count --;
-					
-				}
-			}
+
 			//update the first aid statement
 			countFirstAid();
 		});
@@ -176,9 +160,10 @@
 			$( 'form#addUser' ).each(function(){
     			this.reset();
 			});
+			
 			//close accordion
 			var acc = document.getElementsByClassName("accordion");
-			acc[0].click()	;
+			acc[0].click();
 
 		});
 
