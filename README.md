@@ -4,7 +4,8 @@ A simple cloud-based in/out board using Google Spreadsheets.
 
 TO DO:
 
-
+- Integrate with Heroku
+- Make pretty logo
 - Make pretty on screen keyboard
 - First Aid attendant functionality
 - Password protect access + set cookie
@@ -20,5 +21,3 @@ COMPLETED:
 	- Close Accordion- COMPLETE
 - Figure out how to keep multiple clients in sync?- COMPLETE
 - Fix bug from adding new users- COMPLETE YESSS HAHAHA
-- Integrate with Heroku- Preliminary COMPLETE, must test again before deploying
-- Make pretty logo- COMPLETE
