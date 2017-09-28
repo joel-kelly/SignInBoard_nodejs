@@ -93,6 +93,7 @@ socket.on('clicked', function(person) {
 			var emp =rows.length + 1;
 			console.log("Adding new employee, number: " + emp);
 			person.employeeid = emp;
+			person.firstaid = "no";
 			person.checkbox = "checked";
 			var foo = person.employeeid + 1;
 			person.status ='=if(C' + foo +'="checked","IN","OUT")';
