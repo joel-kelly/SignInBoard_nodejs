@@ -6,7 +6,7 @@ TO DO:
 
 
 - Make pretty on screen keyboard
-- First Aid attendant functionality
+
 - Password protect access + set cookie
 - *Launch alpha?*
 - Figure out how to test for disconnect failures
@@ -22,3 +22,4 @@ COMPLETED:
 - Fix bug from adding new users- COMPLETE YESSS HAHAHA
 - Integrate with Heroku- Preliminary COMPLETE, must test again before deploying
 - Make pretty logo- COMPLETE
+- First Aid attendant functionality- COMPLETE

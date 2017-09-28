@@ -1,57 +1,30 @@
- /*CSS for on screen keyboard */
- /* from here: https://github.com/Mottie/Keyboard/ */
-.fieldset-grouping {
-    clear: both;
+   /* using Bootswatch Darkly theme
+ http://bootswatch.com/darkly/
+*/
+/* override bootstrap active state */
+ button.btn-default:active {
+    background-color: #FFF;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
+button.btn-default:active:hover {
+    background-color: #3276B1;
+}
+/* override Bootstrap excessive button padding */
+ button.ui-keyboard-button.btn {
+    padding: 1px 6px;
+}
+/* Bootswatch Darkly input is too bright */
+ .ui-keyboard-input.light, .ui-keyboard-preview.light {
+    color: #282828;
+    background: #ddd;
+}
+.ui-keyboard-input.dark, .ui-keyboard-preview.dark {
 
-.ui-keyboard-nav button {}
-
-/* position keyboard at bottom of the screen - jQuery UI isn't even loaded! */
-.ui-keyboard {
-    -moz-box-shadow: 0 -15px 15px #FFFFFF;
-    -webkit-box-shadow: 0 -15px 15px #FFFFFF;
-    -ms-box-shadow: 0 -15px 15px #FFFFFF;
-    -o-box-shadow: 0 -15px 15px #FFFFFF;
-    box-shadow: 0 -15px 15px #FFFFFF;
-    -moz-border-radius: 0 0 0 0 !important;
-    -webkit-border-radius: 0 0 0 0 !important;
-    -ms-border-radius: 0 0 0 0 !important;
-    -o-border-radius: 0 0 0 0 !important;
-    border-radius: 0 0 0 0 !important;
-    font-family: 'Helvetica Neue', Helvetica, sans-serif !important;
-    left: 0px !important;
-    top: auto !important;
-    bottom: 33%;
-    position: fixed !important;
-    width: 100%;
 }
-.ui-keyboard button {
-    padding: 0.257em 0.65em 0.397em !important;
-    width: auto !important;
+.input-sm {
+	font-size: 20px;
 }
-.ui-keyboard button.ui-keyboard-space {width: 15em !important;}
-.ui-widget select, .ui-widget textarea, .ui-widget button {
-    font-size: 20 px !important;
-}
-.ui-widget input {
-    font-size: 20 px !important;
-    padding: 0.5em !important;
-}
-input.ui-keyboard-input {
-    background: #ffffff !important;
-}
-
-input.current {
-    border: 1px solid #1581EF !important;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3), 0 0 4px rgba(21, 129, 239, 0.5) inset !important;
-}
-
-.submit-grouping {
-    margin-top: 30px;
-}
-
-
-
 .jumbotron {
   background: #3d3d3d;
   color: white;
