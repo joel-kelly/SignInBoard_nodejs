@@ -5,7 +5,7 @@ A simple cloud-based in/out board using Google Spreadsheets.
 TO DO:
 
 
-- Make pretty on screen keyboard
+
 
 - Password protect access + set cookie
 - *Launch alpha?*
@@ -23,3 +23,4 @@ COMPLETED:
 - Integrate with Heroku- Preliminary COMPLETE, must test again before deploying
 - Make pretty logo- COMPLETE
 - First Aid attendant functionality- COMPLETE
+- Make pretty on screen keyboard- COMPLETE

@@ -1,30 +1,10 @@
-   /* using Bootswatch Darkly theme
- http://bootswatch.com/darkly/
-*/
-/* override bootstrap active state */
- button.btn-default:active {
-    background-color: #FFF;
-    -webkit-box-shadow: none;
-    box-shadow: none;
+.ui-widget button {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-size: 1em;
 }
-button.btn-default:active:hover {
-    background-color: #3276B1;
-}
-/* override Bootstrap excessive button padding */
- button.ui-keyboard-button.btn {
-    padding: 1px 6px;
-}
-/* Bootswatch Darkly input is too bright */
- .ui-keyboard-input.light, .ui-keyboard-preview.light {
-    color: #282828;
-    background: #ddd;
-}
-.ui-keyboard-input.dark, .ui-keyboard-preview.dark {
 
-}
-.input-sm {
-	font-size: 20px;
-}
+
+
 .jumbotron {
   background: #3d3d3d;
   color: white;
