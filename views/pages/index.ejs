@@ -64,8 +64,10 @@
 	
   </div>
   
- 	<p2 id="socketio" > <b>Warning!</b> Database not connected </p2> <br \>
-	<img src = "/fa.png" width=25px> <p2 id="first_aid_statement"><b>Warning!</b> No first aid attendants are in the building.</p2>
+ 	<p2 id="socketio" > <b>Warning!</b> Database not connected. </p2> <br \>
+	<img src = "/fa.png" width=25px> <p2 id="first_aid_statement"><b>Warning!</b> No first aid attendants are in the building.</p2><br \>
+	<p2 id="boilerplate">Questions? Concerns? Something broken? Please contact Joel Kelly or Sheila Frerichs, or email jkelly@bcri.ca.</p2>
+	
 	
 </div>
 	
@@ -82,7 +84,7 @@
  		  
 	  
       socket.on('connect', function() {
-        document.getElementById("socketio").innerHTML = "Database connected";
+        document.getElementById("socketio").innerHTML = "Database connected.";
       });
       socket.on('showrows', function(rows) {
         var html='';

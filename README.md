@@ -4,9 +4,6 @@ A simple cloud-based in/out board using Google Spreadsheets.
 
 TO DO:
 
-
-
-
 - Password protect access + set cookie
 - *Launch alpha?*
 - Figure out how to test for disconnect failures
